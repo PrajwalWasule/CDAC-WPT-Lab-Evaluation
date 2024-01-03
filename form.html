@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <script>
+     
+        const displayTable = () => {
+            var studJSON = localStorage.getItem("list");
+            var studarr2 = JSON.parse(studJSON);
+            console.log(studarr2);
+            var str = "<table border='2'><tr><th>First Name</th><th>Last Name</th><th>Mobile</th></tr>";
+            for (var e of studarr2) {
+                str += `<tr><td>${e.fn}</td><td>${e.name}</td><td>${e.mob}</td></tr>`
+            }
+            str += "</table>";
+            document.getElementById("mydiv").innerHTML = str;
+        }
+        var studarr2;
+        if (localStorage.getItem("list") != null) {
+            studarr2 = JSON.parse(localStorage.getItem("list"));
+        }
+        else {
+            studarr2 = [];
+        }
+        function addnm() {
+            if (typeof (Storage) !== undefined) {
+                var fn = document.getElementById('fn').value;
+                var name = document.getElementById('nm').value;
+                var mob = document.getElementById('mob').value;
+
+                var stud = { fn, name, mob };
+                studarr2.push(stud);
+                localStorage.setItem("list", JSON.stringify(studarr2));
+                clearform();
+                displayTable();
+            }
+        }
+  
+        const clearform = function () {
+            document.getElementById('fn').value = "";
+            document.getElementById('nm').value = "";
+            document.getElementById('mob').value = "";
+            document.getElementById('fn').focus();
+        }
+       
+    </script>
+</head>
+
+<body onload="displayTable()">
+    <form>
+        FIRST NAME: <input type="text" name="fn" id="fn"><br>
+        LAST NAME: <input type="text" name="nm" id="nm"><br>
+        MOBILE: <input type="text" name="mob" id="mob"><br>
+        <button type="button" name="btn" id="add" onclick="addnm()">SUBMIT</button>
+        
+    </form><br><br>
+    <hr>
+    <div id="mydiv">
+
+    </div>
+</body>
+
+</html>

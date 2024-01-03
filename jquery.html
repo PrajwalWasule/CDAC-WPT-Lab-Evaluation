@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #animateButton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        border:2px solid rgb(0, 0, 0);
+        padding: 20px;
+        color:red;
+      }
+      #toggleButton
+      {
+        border:2px solid rgb(11, 0, 170);
+        padding: 35px;
+        color: rgb(22, 22, 22);
+      }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var isAnimating = false; 
+
+        $("#toggleButton").click(function () {
+          if (!isAnimating) {
+            isAnimating = true;
+            var currentPosition = parseInt($("#animateButton").css("bottom"));
+            var targetPosition =
+              currentPosition <= $(window).height() / 2
+                ? $(window).height() - $("#animateButton").outerHeight() - 20
+                : 20;
+
+            $("#animateButton").animate(
+              {
+                bottom: targetPosition,
+                opacity: "1",
+              },
+              {
+                duration: 1000,
+                easing: "swing",
+                complete: function () {
+                  isAnimating = false;
+                  $("#animateButton").text(
+                    targetPosition === 20 ? "Go Top" : "Go Bottom"
+                  );
+                },
+              }
+            );
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <button id="animateButton">Go Top </button>
+      <button id="toggleButton"  style=" margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%);transform: translateY(-50%);">Toggle</button>
+    </div>
+  </body>
+</html>
